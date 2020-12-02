@@ -1,0 +1,32 @@
+<nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+    <input nz-input nzSize="large" placeholder="请输入参加选秀的内容" #itemName />
+</nz-input-group>
+<ng-template #suffixButton>
+    <button nz-button nzType="primary" nzSize="large" nzSearch
+        (click)="add(itemName.value); itemName.value=''">添加</button>
+</ng-template>
+<nz-table #basicTable [nzData]="list" [nzFrontPagination]="false">
+    <thead>
+        <tr>
+            <th nzAlign="center">名字</th>
+            <th nzAlign="center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td nzAlign="center">
+                <nz-tag [nzColor]="list[selectedIndex] == data ? 'volcano' : 'green' ">{{data.name}}</nz-tag>
+            </td>
+            <td nzAlign="center"><button nz-button nzType="text" nzDanger (click)="delete(data)">x</button></td>
+        </tr>
+    </tbody>
+</nz-table>
+
+<button class="choose-btn" nz-button nzType="primary" (click)="chooseOne()" *ngIf="list.length > 0">选秀开始</button>
+<hr>
+<div *ngIf="chooseList.length > 0">
+    <div *ngFor="let c of chooseList">
+        <nz-tag [nzColor]="'volcano'">{{c.name}}</nz-tag>
+    </div>
+    <button nz-button nzType="text" nzDanger (click)="flush()">清除记录</button>
+</div>
